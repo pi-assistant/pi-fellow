@@ -9,37 +9,53 @@ const fs = require('fs');
 
 const client = new speech.SpeechClient();
 
-const audioFile = './assets/hey-test.flac';
+const record = require('node-record-lpcm16');
 
-const file = fs.readFileSync(audioFile);
-const audioBytes = file.toString('base64');
+/**
+ * TODO(developer): Uncomment the following lines before running the sample.
+ */
+const encoding = 'LINEAR16';
+const sampleRateHertz = 16000;
+const languageCode = 'en-US';
 
-const audio = {
-  content: audioBytes,
-};
-
-const config = {
-  encoding: 'FLAC',
-  SampleRateHertz:48000,
-  languageCode: 'en-US',
-};
 
 const request = {
-  audio: audio,
-  config: config,
+  config: {
+    encoding: encoding,
+    sampleRateHertz: sampleRateHertz,
+    languageCode: languageCode,
+  },
+  interimResults: false, // If you want interim results, set this to true
 };
 
-client 
-  .recognize(request)
-  .then(data =>{
-    const response = data[0];
-    const transcription = response.results
-      .map(result=>result.alternatives[0].transcript)
-      .join('\n');
-    console.log(`transcript: ${transcription}`);
+// Create a recognize stream
+const recognizeStream = client
+  .streamingRecognize(request)
+  .on('error', console.error)
+  .on('data', data =>
+    process.stdout.write(
+      data.results[0] && data.results[0].alternatives[0]
+        ? `Transcription: ${data.results[0].alternatives[0].transcript}\n`
+        : `\n\nReached transcription time limit, press Ctrl+C\n`
+    )
+  );
 
+// Start recording and send the microphone input to the Speech API
+record
+  .start({
+    sampleRateHertz: sampleRateHertz,
+    threshold: 0,
+    // Other options, see https://www.npmjs.com/package/node-record-lpcm16#options
+    verbose: false,
+    recordProgram: 'rec', // Try also "arecord" or "sox"
+    silence: '10.0',
   })
-  .catch(err => console.error('error', err));
+  .on('error', console.error)
+  .pipe(recognizeStream);
+
+console.log('Listening, press Ctrl+C to stop.');
+
+
 
 // Prepare the express app
 const app = express();
