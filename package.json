@@ -17,15 +17,19 @@
   },
   "homepage": "https://github.com/pi-assistant/pi-fellow#readme",
   "dependencies": {
+    "@google-cloud/speech": "^2.2.0",
+    "@google-cloud/text-to-speech": "^0.4.0",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "fs": "0.0.1-security",
     "jest": "^23.6.0",
     "mongodb": "^3.1.12",
     "mongodb-memory-server": "^3.0.0",
     "mongoose": "^5.4.5",
     "mongoose-schema-jsonschema": "^1.2.1",
     "morgan": "^1.9.1",
+    "node-record-lpcm16": "^0.3.1",
     "superagent": "^4.1.0",
     "swagger-ui-express": "^4.0.2"
   }
