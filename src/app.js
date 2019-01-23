@@ -14,21 +14,17 @@ const events = require('../modules/events.js');
 require('./check-data.js');
 require('./check-command.js');
 
-// const morgan = require('morgan');
-
-//const blinker = require('./util/led.js');
-//const Gpio = require('onoff').Gpio;
-
-//const blueLED = new Gpio(4,'out');
-//const redLED = new Gpio(16,'out');
+require('./light-listen');
 
 
 const encoding = 'LINEAR16';
 const sampleRateHertz = 16000;
 const languageCode = 'en-US';
 
+
 let dataArr = [];
 let parsedString = [];
+
 
 const request = {
   config: {
@@ -51,25 +47,24 @@ const request = {
   
   function listen(arr) {
     if(magVariants.includes(arr[0])){
-      // turn on light
-      console.log('turned on green');
+      events.emit('blue-on');
+
+
       if(arr[1]){
-        console.log('yellow light');
         events.emit('check-command', arr);
-        if(arr[2]){
-          console.log('heard type of list', arr[2]);
-        }
+        events.emit('blue-flash');
+        events.emit('blue-on');
         if(arr[3]){
-          console.log(`dataArr: ${dataArr}`);
           events.emit('check-data', arr);
+          console.log(`dataArr: ${dataArr}`);
+          events.emit('green-flash');
         }
-        //blueLED.writeSync(1);
 
       if(arr[1]){
         parsedString = arr[1].split(' ');
         parsedString = [];
-        //blueLED.writeSync(0);
-        //blinker();
+        events.emit('blue-off');
+
       }else {
         console.log(`arr: ${arr}`);
       }
@@ -108,7 +103,7 @@ const request = {
     verbose: false,
     recordProgram: 'rec', // Try also "arecord" or "sudo apt"
     silence: '10.0',
-    //device: 'plughw:1',
+    device: 'plughw:1',
   })
   .on('error', console.error)
   .pipe(recognizeStream);
