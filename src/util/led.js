@@ -21,6 +21,7 @@ function blinker(led) {
 	
 };
 
+
 function kill(led) {
 	led.writeSync(0);
 }
@@ -33,3 +34,4 @@ function killAll() {
 
 
 module.exports = {lightSolid, blinker, kill, killAll};
+
