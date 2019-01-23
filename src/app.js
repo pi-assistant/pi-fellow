@@ -22,14 +22,17 @@ const Gpio = require('onoff').Gpio;
 
 const blueLED = new Gpio(4,'out');
 const redLED = new Gpio(16,'out');
+const greenLED = new Gpio(23, 'out');
 
 
 const encoding = 'LINEAR16';
 const sampleRateHertz = 16000;
 const languageCode = 'en-US';
 
+
 let dataArr = [];
 let parsedString = [];
+
 
 const request = {
   config: {
@@ -50,6 +53,7 @@ const recognizeStream = client
   function listen(arr) {
     if(magVariants.includes(arr[0])){
       // turn on light
+      blueLED.writeSync(1);
       console.log('turned on green');
       if(arr[1]){
         console.log('yellow light');
@@ -57,25 +61,24 @@ const recognizeStream = client
         if(arr[2]){
           console.log(`dataArr: ${dataArr}`);
           events.emit('check-data', arr);
+          blinker();
         }
-        blueLED.writeSync(1);
-
+        
       if(arr[1]){
         console.log('parsing');
         parsedString = arr[1].split(' ');
         console.log(parsedString);
         parsedString = [];
         blueLED.writeSync(0);
-        blinker();
+        
+
       }else {
         console.log(`arr: ${arr}`);
       }
     } 
   }
+}
 
-
-  let dataArr = [];
-  let parsedString = [];
 
   function handleData (data){
         if(data.results[0] && data.results[0].alternatives[0]) {
@@ -107,7 +110,7 @@ record
     verbose: false,
     recordProgram: 'rec', // Try also "arecord" or "sudo apt"
     silence: '10.0',
-    //device: 'plughw:1',
+    device: 'plughw:1',
   })
   .on('error', console.error)
   .pipe(recognizeStream);
