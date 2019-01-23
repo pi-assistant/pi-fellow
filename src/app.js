@@ -1,19 +1,20 @@
 'use strict';
-const os = require('os'); 
-os.tmpDir = os.tmpdir;
+
 
 // 3rd Party Resources
 const express = require('express');
 const cors = require('cors');
-const util = require('util');
-
 const speech = require('@google-cloud/speech');
-
 const fs = require('fs');
 
 const client = new speech.SpeechClient();
-
 const record = require('node-record-lpcm16');
+
+const events = require('../modules/events.js');
+require('./check-data.js');
+require('./check-command.js');
+
+// const morgan = require('morgan');
 
 const blinker = require('./util/led.js');
 
@@ -44,12 +45,19 @@ const recognizeStream = client
   .streamingRecognize(request)
   .on('error', console.error)
   .on('data', handleData)
-
   const magVariants = ['hey magpie', 'a magpie', 'hey McFly','hey man cry', 'play magpie', 'play Mac Dre'];
   
   function listen(arr) {
     if(magVariants.includes(arr[0])){
       // turn on light
+      console.log('turned on green');
+      if(arr[1]){
+        console.log('yellow light');
+        events.emit('check-command', arr);
+        if(arr[2]){
+          console.log(`dataArr: ${dataArr}`);
+          events.emit('check-data', arr);
+        }
         blueLED.writeSync(1);
 
       if(arr[1]){
@@ -60,28 +68,28 @@ const recognizeStream = client
         blueLED.writeSync(0);
         blinker();
       }else {
-        
         console.log(`arr: ${arr}`);
       }
     } 
-
   }
 
+
+  let dataArr = [];
+  let parsedString = [];
+
   function handleData (data){
-    
-     
         if(data.results[0] && data.results[0].alternatives[0]) {
-          dataArr.push(data.results[0].alternatives[0].transcript.trim());
-          
+          dataArr.push(data.results[0].alternatives[0].transcript.trim());       
           listen(dataArr);
-          console.log(`dataArr: ${dataArr}`);
         }
         
-             
-        if(dataArr.length > 1){
+        events.on('send-list', ()=>{
+          dataArr=[];
+        })
+                 
+        if(dataArr.length > 2){
           dataArr = [];
-          }
-          
+        }
           
         if(!magVariants.includes(dataArr[0]) ) {
           dataArr = [];
@@ -99,7 +107,7 @@ record
     verbose: false,
     recordProgram: 'rec', // Try also "arecord" or "sudo apt"
     silence: '10.0',
-    device: 'plughw:1',
+    //device: 'plughw:1',
   })
   .on('error', console.error)
   .pipe(recognizeStream);
