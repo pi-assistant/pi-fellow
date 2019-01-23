@@ -1,5 +1,6 @@
 'use strict';
 
+
 // 3rd Party Resources
 const express = require('express');
 const cors = require('cors');
@@ -15,12 +16,20 @@ require('./check-command.js');
 
 // const morgan = require('morgan');
 
+const blinker = require('./util/led.js');
+
+const Gpio = require('onoff').Gpio;
+
+const blueLED = new Gpio(4,'out');
+const redLED = new Gpio(16,'out');
 
 
 const encoding = 'LINEAR16';
 const sampleRateHertz = 16000;
 const languageCode = 'en-US';
 
+let dataArr = [];
+let parsedString = [];
 
 const request = {
   config: {
@@ -36,14 +45,7 @@ const recognizeStream = client
   .streamingRecognize(request)
   .on('error', console.error)
   .on('data', handleData)
-    //process.stdout.write(
-      //data.results[0] && data.results[0].alternatives[0]
-        //? `Transcription: ${data.results[0].alternatives[0].transcript}\n`
-        //: `\n\nReached transcription time limit, press Ctrl+C\n`
-    //)
-    
-  //;
-  const magVariants = ['hey magpie', 'a magpie', 'hey McFly','hey man cry', 'hey Meg fight'];
+  const magVariants = ['hey magpie', 'a magpie', 'hey McFly','hey man cry', 'play magpie', 'play Mac Dre'];
   
   function listen(arr) {
     if(magVariants.includes(arr[0])){
@@ -56,6 +58,17 @@ const recognizeStream = client
           console.log(`dataArr: ${dataArr}`);
           events.emit('check-data', arr);
         }
+        blueLED.writeSync(1);
+
+      if(arr[1]){
+        console.log('parsing');
+        parsedString = arr[1].split(' ');
+        console.log(parsedString);
+        parsedString = [];
+        blueLED.writeSync(0);
+        blinker();
+      }else {
+        console.log(`arr: ${arr}`);
       }
     } 
   }
@@ -63,6 +76,7 @@ const recognizeStream = client
 
   let dataArr = [];
   let parsedString = [];
+
   function handleData (data){
         if(data.results[0] && data.results[0].alternatives[0]) {
           dataArr.push(data.results[0].alternatives[0].transcript.trim());       
@@ -82,6 +96,7 @@ const recognizeStream = client
           }
         
   }
+  
 
 // Start recording and send the microphone input to the Speech API
 record
@@ -106,7 +121,6 @@ const app = express();
 
 // App Level MW
 app.use(cors());
-// app.use(morgan('dev'));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
