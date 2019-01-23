@@ -16,7 +16,7 @@ require('./check-command.js');
 
 // const morgan = require('morgan');
 
-const blinker = require('./util/led.js');
+const ledController = require('./util/led.js');
 
 const Gpio = require('onoff').Gpio;
 
@@ -53,7 +53,7 @@ const recognizeStream = client
   function listen(arr) {
     if(magVariants.includes(arr[0])){
       // turn on light
-      blueLED.writeSync(1);
+      ledController.lightSolid(blueLED);
       console.log('turned on green');
       if(arr[1]){
         console.log('yellow light');
@@ -61,7 +61,7 @@ const recognizeStream = client
         if(arr[2]){
           console.log(`dataArr: ${dataArr}`);
           events.emit('check-data', arr);
-          blinker();
+          ledController.blinker(greenLED);
         }
         
       if(arr[1]){
@@ -69,7 +69,7 @@ const recognizeStream = client
         parsedString = arr[1].split(' ');
         console.log(parsedString);
         parsedString = [];
-        blueLED.writeSync(0);
+        ledController.lightSolid(greenLED);
         
 
       }else {
