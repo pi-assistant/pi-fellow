@@ -13,7 +13,9 @@ const record = require('node-record-lpcm16');
 const events = require('../modules/events.js');
 require('./check-data.js');
 require('./check-command.js');
+
 require('./light-listen');
+
 
 const encoding = 'LINEAR16';
 const sampleRateHertz = 16000;
@@ -33,12 +35,15 @@ const request = {
   interimResults: false, // If you want interim results, set this to true
 };
 
-// Create a recognize stream
-const recognizeStream = client
+  const recognizeStream = client
   .streamingRecognize(request)
   .on('error', console.error)
   .on('data', handleData)
-  const magVariants = ['hey magpie', 'a magpie', 'hey McFly','hey man cry', 'play magpie', 'play Mac Dre'];
+
+
+  const magVariants = ['hey magpie', 'a magpie', 'hey McFly','hey man cry', 'play magpie', 'play Mac Dre', 'hey Meg big fat guy'];
+
+// Create a recognize stream
   
   function listen(arr) {
     if(magVariants.includes(arr[0])){
@@ -49,21 +54,16 @@ const recognizeStream = client
         events.emit('check-command', arr);
         events.emit('blue-flash');
         events.emit('blue-on');
-        if(arr[2]){
+        if(arr[3]){
           events.emit('check-data', arr);
           console.log(`dataArr: ${dataArr}`);
           events.emit('green-flash');
         }
-        
+
       if(arr[1]){
-        console.log('parsing');
         parsedString = arr[1].split(' ');
-        console.log(parsedString);
         parsedString = [];
-
         events.emit('blue-off');
-
-        
 
       }else {
         console.log(`arr: ${arr}`);
@@ -83,7 +83,7 @@ const recognizeStream = client
           dataArr=[];
         })
                  
-        if(dataArr.length > 2){
+        if(dataArr.length > 3){
           dataArr = [];
         }
           
@@ -95,7 +95,7 @@ const recognizeStream = client
   
 
 // Start recording and send the microphone input to the Speech API
-record
+  record
   .start({
     sampleRateHertz: sampleRateHertz,
     threshold: 0,
@@ -108,9 +108,7 @@ record
   .on('error', console.error)
   .pipe(recognizeStream);
 
-console.log('Listening, press Ctrl+C to stop.');
-
-
+  console.log('Listening, press Ctrl+C to stop.');
 
 // Prepare the express app
 const app = express();
