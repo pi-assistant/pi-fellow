@@ -16,12 +16,11 @@ require('./check-command.js');
 
 // const morgan = require('morgan');
 
-const blinker = require('./util/led.js');
+//const blinker = require('./util/led.js');
+//const Gpio = require('onoff').Gpio;
 
-const Gpio = require('onoff').Gpio;
-
-const blueLED = new Gpio(4,'out');
-const redLED = new Gpio(16,'out');
+//const blueLED = new Gpio(4,'out');
+//const redLED = new Gpio(16,'out');
 
 
 const encoding = 'LINEAR16';
@@ -40,12 +39,15 @@ const request = {
   interimResults: false, // If you want interim results, set this to true
 };
 
-// Create a recognize stream
-const recognizeStream = client
+  const recognizeStream = client
   .streamingRecognize(request)
   .on('error', console.error)
   .on('data', handleData)
-  const magVariants = ['hey magpie', 'a magpie', 'hey McFly','hey man cry', 'play magpie', 'play Mac Dre'];
+
+
+  const magVariants = ['hey magpie', 'a magpie', 'hey McFly','hey man cry', 'play magpie', 'play Mac Dre', 'hey Meg big fat guy'];
+
+// Create a recognize stream
   
   function listen(arr) {
     if(magVariants.includes(arr[0])){
@@ -55,27 +57,26 @@ const recognizeStream = client
         console.log('yellow light');
         events.emit('check-command', arr);
         if(arr[2]){
+          console.log('heard type of list', arr[2]);
+        }
+        if(arr[3]){
           console.log(`dataArr: ${dataArr}`);
           events.emit('check-data', arr);
         }
-        blueLED.writeSync(1);
+        //blueLED.writeSync(1);
 
       if(arr[1]){
-        console.log('parsing');
         parsedString = arr[1].split(' ');
-        console.log(parsedString);
         parsedString = [];
-        blueLED.writeSync(0);
-        blinker();
+        //blueLED.writeSync(0);
+        //blinker();
       }else {
         console.log(`arr: ${arr}`);
       }
     } 
   }
+}
 
-
-  let dataArr = [];
-  let parsedString = [];
 
   function handleData (data){
         if(data.results[0] && data.results[0].alternatives[0]) {
@@ -87,7 +88,7 @@ const recognizeStream = client
           dataArr=[];
         })
                  
-        if(dataArr.length > 2){
+        if(dataArr.length > 3){
           dataArr = [];
         }
           
@@ -99,7 +100,7 @@ const recognizeStream = client
   
 
 // Start recording and send the microphone input to the Speech API
-record
+  record
   .start({
     sampleRateHertz: sampleRateHertz,
     threshold: 0,
@@ -112,9 +113,7 @@ record
   .on('error', console.error)
   .pipe(recognizeStream);
 
-console.log('Listening, press Ctrl+C to stop.');
-
-
+  console.log('Listening, press Ctrl+C to stop.');
 
 // Prepare the express app
 const app = express();
