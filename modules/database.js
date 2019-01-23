@@ -1,47 +1,47 @@
 module.exports = (function database(){
-    var db = {};
+  var db = {};
 
-    return {
+  return {
 
-        print: function(){
-            console.log(dbArray);
-        },
+    print: function(){
+      console.log(dbArray);
+    },
 
-        insert: function(obj){
-            // console.log('the list obj', obj);
-            if(db[`${obj.type}`]){
-                db[`${obj.type}`].items = obj.items;
-                db[`${obj.type}`].date = obj.date;
-            }
-            else{
-                db[`${obj.type}`] = obj;
-            }
+    insert: function(obj){
 
-            console.log('database', db);
-        },
+      if(db[`${obj.type}`]){
+        db[`${obj.type}`].items = obj.items;
+        db[`${obj.type}`].date = obj.date;
+      }
+      else{
+        db[`${obj.type}`] = obj;
+      }
 
-        update: function(str){
-            dbArray[0].items = dbArray[0].items.concat(' ', str);
-            console.log('adding something', dbArray);
-        },
+      console.log('database', db);
+    },
 
-        sendList: function(listType){
-            console.log('in send method');
-            let conjunctions = ['add', 'and', ','];
-           let requestedList = db[listType].items.split(' ');
-           console.log('new list array', requestedList);
-           const filteredList = requestedList.filter( item => {
-               return !conjunctions.includes(item.trim() );
-           });
-           filteredList.unshift(`Your MagPi ${listType} List: \n`)
-           let filteredStr = filteredList.join('\n - ');
-           return filteredStr;
-        },
+    update: function(str){
+      dbArray[0].items = dbArray[0].items.concat(' ', str);
+      console.log('adding something', dbArray);
+    },
 
-        getAll: function(){
-            return Object.keys(db);
-        }
+    sendList: function(listType){
+      console.log('in send method');
+      let conjunctions = ['add', 'and', ','];
+      let requestedList = db[listType].items.split(' ');
+      console.log('new list array', requestedList);
+      const filteredList = requestedList.filter( item => {
+          return !conjunctions.includes(item.trim() );
+      });
+      filteredList.unshift(`Your MagPi ${listType} List: \n`)
+      let filteredStr = filteredList.join('\n - ');
+      return filteredStr;
+    },
+
+    getAll: function(){
+      return Object.keys(db);
     }
+  }
 }());
 
 
