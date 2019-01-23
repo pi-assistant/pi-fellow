@@ -1,5 +1,5 @@
 module.exports = (function database(){
-    var dbArray = [];
+    var db = {};
 
     return {
 
@@ -8,8 +8,16 @@ module.exports = (function database(){
         },
 
         insert: function(obj){
-            dbArray.unshift(obj);
-            console.log('in database IFFE', dbArray);
+            // console.log('the list obj', obj);
+            if(db[`${obj.type}`]){
+                db[`${obj.type}`].items = obj.items;
+                db[`${obj.type}`].date = obj.date;
+            }
+            else{
+                db[`${obj.type}`] = obj;
+            }
+
+            console.log('database', db);
         },
 
         update: function(str){
@@ -17,17 +25,25 @@ module.exports = (function database(){
             console.log('adding something', dbArray);
         },
 
-        sendList: function(){
+        sendList: function(listType){
+            console.log('in send method');
             let conjunctions = ['add', 'and', ','];
-           let newList = dbArray[0].items.split(' ');
-           console.log('new list array', newList);
-           const filteredList = newList.filter( item => {
+           let requestedList = db[listType].items.split(' ');
+           console.log('new list array', requestedList);
+           const filteredList = requestedList.filter( item => {
                return !conjunctions.includes(item.trim() );
            });
-           filteredList.unshift('Your MagPi List: \n')
+           filteredList.unshift(`Your MagPi ${listType} List: \n`)
            let filteredStr = filteredList.join('\n - ');
            return filteredStr;
+        },
+
+        getAll: function(){
+            return Object.keys(db);
         }
     }
 }());
+
+
+
 

@@ -1,5 +1,5 @@
 const telegram = require('telegram-bot-api');
-const util = require('util');
+// const util = require('util');
 const events = require('./events');
 require('../src/check-command');
 
