@@ -15,17 +15,6 @@ require('./check-data.js');
 require('./check-command.js');
 require('./light-listen');
 
-// const morgan = require('morgan');
-const ledController = require('./util/led.js');
-
-
-// const Gpio = require('onoff').Gpio;
-
-// const blueLED = new Gpio(4,'out');
-// const redLED = new Gpio(16,'out');
-// const greenLED = new Gpio(23, 'out');
-
-
 const encoding = 'LINEAR16';
 const sampleRateHertz = 16000;
 const languageCode = 'en-US';
@@ -114,7 +103,7 @@ record
     verbose: false,
     recordProgram: 'rec', // Try also "arecord" or "sudo apt"
     silence: '10.0',
-    // device: 'plughw:1',
+    device: 'plughw:1',
   })
   .on('error', console.error)
   .pipe(recognizeStream);
