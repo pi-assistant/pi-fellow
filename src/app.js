@@ -16,8 +16,8 @@ require('./check-command.js');
 require('./light-listen');
 
 // const morgan = require('morgan');
+const ledController = require('./util/led.js');
 
-// const blinker = require('./util/led.js');
 
 // const Gpio = require('onoff').Gpio;
 
@@ -55,6 +55,7 @@ const recognizeStream = client
     if(magVariants.includes(arr[0])){
       events.emit('blue-on');
 
+
       if(arr[1]){
         events.emit('check-command', arr);
         events.emit('blue-flash');
@@ -70,7 +71,9 @@ const recognizeStream = client
         parsedString = arr[1].split(' ');
         console.log(parsedString);
         parsedString = [];
+
         events.emit('blue-off');
+
         
 
       }else {
