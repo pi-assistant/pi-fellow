@@ -30,6 +30,7 @@
     "mongoose-schema-jsonschema": "^1.2.1",
     "morgan": "^1.9.1",
     "node-record-lpcm16": "^0.3.1",
+    "onoff": "^3.2.2",
     "superagent": "^4.1.0",
     "swagger-ui-express": "^4.0.2"
   }

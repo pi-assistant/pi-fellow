@@ -1,11 +1,12 @@
 'use strict';
-var os = require('os'); 
+const os = require('os'); 
 os.tmpDir = os.tmpdir;
 
 // 3rd Party Resources
 const express = require('express');
 const cors = require('cors');
-// const morgan = require('morgan');
+const util = require('util');
+
 const speech = require('@google-cloud/speech');
 
 const fs = require('fs');
@@ -14,12 +15,20 @@ const client = new speech.SpeechClient();
 
 const record = require('node-record-lpcm16');
 
+const blinker = require('./util/led.js');
+
+const Gpio = require('onoff').Gpio;
+
+const blueLED = new Gpio(4,'out');
+const redLED = new Gpio(16,'out');
 
 
 const encoding = 'LINEAR16';
 const sampleRateHertz = 16000;
 const languageCode = 'en-US';
 
+let dataArr = [];
+let parsedString = [];
 
 const request = {
   config: {
@@ -35,25 +44,21 @@ const recognizeStream = client
   .streamingRecognize(request)
   .on('error', console.error)
   .on('data', handleData)
-    //process.stdout.write(
-      //data.results[0] && data.results[0].alternatives[0]
-        //? `Transcription: ${data.results[0].alternatives[0].transcript}\n`
-        //: `\n\nReached transcription time limit, press Ctrl+C\n`
-    //)
-    
-  //;
-  const magVariants = ['hey magpie', 'a magpie', 'hey McFly','hey man cry'];
+
+  const magVariants = ['hey magpie', 'a magpie', 'hey McFly','hey man cry', 'play magpie', 'play Mac Dre'];
   
   function listen(arr) {
-    console.log('listen called', arr);
     if(magVariants.includes(arr[0])){
       // turn on light
-      console.log('turned on light');
+        blueLED.writeSync(1);
+
       if(arr[1]){
         console.log('parsing');
         parsedString = arr[1].split(' ');
         console.log(parsedString);
         parsedString = [];
+        blueLED.writeSync(0);
+        blinker();
       }else {
         
         console.log(`arr: ${arr}`);
@@ -61,8 +66,7 @@ const recognizeStream = client
     } 
 
   }
-  let dataArr = [];
-  let parsedString = [];
+
   function handleData (data){
     
      
@@ -84,6 +88,7 @@ const recognizeStream = client
           }
         
   }
+  
 
 // Start recording and send the microphone input to the Speech API
 record
@@ -108,7 +113,6 @@ const app = express();
 
 // App Level MW
 app.use(cors());
-// app.use(morgan('dev'));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
