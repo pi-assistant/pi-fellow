@@ -45,28 +45,20 @@ const request = {
 
 // Create a recognize stream
   
-  function listen(arr) {
-    if(magVariants.includes(arr[0])){
+function listen(arr) {
+  if(magVariants.includes(arr[0])){
+    if(arr.length === 1){
       events.emit('blue-on');
+    }
 
-
-      if(arr[1]){
-        events.emit('check-command', arr);
-        events.emit('blue-flash');
-        events.emit('blue-on');
-        if(arr[3]){
-          events.emit('check-data', arr);
-          console.log(`dataArr: ${dataArr}`);
-          events.emit('green-flash');
-        }
-
-      if(arr[1]){
-        parsedString = arr[1].split(' ');
-        parsedString = [];
-        events.emit('blue-off');
-
-      }else {
-        console.log(`arr: ${arr}`);
+    if(arr[1]){
+      if(arr.length === 2){
+      events.emit('blue-flash');
+      events.emit('blue-off');
+      events.emit('check-command', arr);
+      }
+      if(arr[3]){
+        events.emit('check-data', arr);
       }
     } 
   }
