@@ -13,16 +13,17 @@ const record = require('node-record-lpcm16');
 const events = require('../modules/events.js');
 require('./check-data.js');
 require('./check-command.js');
+require('./light-listen');
 
 // const morgan = require('morgan');
 
-const blinker = require('./util/led.js');
+// const blinker = require('./util/led.js');
 
-const Gpio = require('onoff').Gpio;
+// const Gpio = require('onoff').Gpio;
 
-const blueLED = new Gpio(4,'out');
-const redLED = new Gpio(16,'out');
-const greenLED = new Gpio(23, 'out');
+// const blueLED = new Gpio(4,'out');
+// const redLED = new Gpio(16,'out');
+// const greenLED = new Gpio(23, 'out');
 
 
 const encoding = 'LINEAR16';
@@ -52,16 +53,16 @@ const recognizeStream = client
   
   function listen(arr) {
     if(magVariants.includes(arr[0])){
-      // turn on light
-      blueLED.writeSync(1);
-      console.log('turned on green');
+      events.emit('blue-on');
+
       if(arr[1]){
-        console.log('yellow light');
         events.emit('check-command', arr);
+        events.emit('blue-flash');
+        events.emit('blue-on');
         if(arr[2]){
-          console.log(`dataArr: ${dataArr}`);
           events.emit('check-data', arr);
-          blinker();
+          console.log(`dataArr: ${dataArr}`);
+          events.emit('green-flash');
         }
         
       if(arr[1]){
@@ -69,7 +70,7 @@ const recognizeStream = client
         parsedString = arr[1].split(' ');
         console.log(parsedString);
         parsedString = [];
-        blueLED.writeSync(0);
+        events.emit('blue-off');
         
 
       }else {
@@ -110,7 +111,7 @@ record
     verbose: false,
     recordProgram: 'rec', // Try also "arecord" or "sudo apt"
     silence: '10.0',
-    device: 'plughw:1',
+    // device: 'plughw:1',
   })
   .on('error', console.error)
   .pipe(recognizeStream);
