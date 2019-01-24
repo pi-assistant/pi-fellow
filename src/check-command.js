@@ -3,7 +3,8 @@
 const events = require('../modules/events.js');
 const app = require('./app.js');
 const db = require('../modules/database');
-
+const Sound = require('node-aplay');
+const music = new Sound('../assets/testingfile.wav');
 require('../modules/send-message');
 require('./light-listen');
 
@@ -17,6 +18,9 @@ function handleCommand(arr){
     events.emit('green-flash')
     events.emit('blue-off');
     events.emit('send-list', listType);
+  }
+  if(arr[1].trim() === 'play music'){
+    events.emit('play')
   }
 }
 
@@ -45,4 +49,10 @@ function handleSend(listType){
   }
 }
 
+events.on('play', playMusic);
+
+function playMusic() {
+  console.log('in play music');
+  music.play();
+}
 
