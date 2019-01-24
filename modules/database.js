@@ -16,7 +16,6 @@ module.exports = (function database(){
       else{
         db[`${obj.type}`] = obj;
       }
-
       console.log('database', db);
     },
 
