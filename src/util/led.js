@@ -21,17 +21,9 @@ function blinker(led) {
 	
 };
 
-
 function kill(led) {
 	led.writeSync(0);
 }
 
-function killAll() {
-	redLED.writeSync(0);
-	greenLED.writeSync(0);
-	blueLED.writeSync(0);
-}
-
-
-module.exports = {lightSolid, blinker, kill, killAll};
+module.exports = {lightSolid, blinker, kill};
 

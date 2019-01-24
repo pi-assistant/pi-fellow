@@ -16,7 +16,6 @@ events.on('blue-flash',handleBlueFlash);
 events.on('green-flash', handleGreenFlash);
 events.on('red-flash', handleRedFlash);
 
-
 function handleBlueOn(){
   ledController.lightSolid(blueLED);
   console.log('blue light on');
@@ -41,4 +40,3 @@ function handleBlueFlash() {
   ledController.blinker(blueLED);
   console.log('blue light flash');
 }
-

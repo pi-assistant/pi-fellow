@@ -53,9 +53,18 @@ function listen(arr) {
 
     if(arr[1]){
       if(arr.length === 2){
-      events.emit('blue-flash');
-      events.emit('blue-off');
+        if (arr[1] === 'new list') {
+          events.emit('blue-flash');
+          events.emit('green-flash');
+          events.emit('blue-on');
+        }
       events.emit('check-command', arr);
+      }
+      if(arr[2]) {
+        if(arr.length === 3) {
+          events.emit('blue-flash');
+          events.emit('blue-on');
+        }
       }
       if(arr[3]){
         events.emit('check-data', arr);

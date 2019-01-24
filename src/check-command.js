@@ -1,6 +1,9 @@
+'use strict';
+
 const events = require('../modules/events.js');
 const app = require('./app.js');
 const db = require('../modules/database');
+
 require('../modules/send-message');
 require('./light-listen');
 
@@ -11,6 +14,8 @@ function handleCommand(arr){
   let sendCheck = arr[1].split(' ')[0].trim();
   if(sendCheck ==='send'){
     let listType = arr[1].split(' ')[1].trim();
+    events.emit('green-flash')
+    events.emit('blue-off');
     events.emit('send-list', listType);
   }
 }
@@ -18,8 +23,6 @@ function handleCommand(arr){
 events.on('send-list', handleSend);
 
 function handleSend(listType){
-  events.emit('green-flash')
-
   if(listType === 'list'){
     return 'all lists';
     // ???? What does this do?
@@ -31,6 +34,7 @@ function handleSend(listType){
     listArr.forEach( list => {
     let message = db.sendList(list);
     events.emit('bot-message', message);
+    events.emit('green-flash');
     return;
     })        
   }
@@ -39,6 +43,6 @@ function handleSend(listType){
     console.log(listType, message);
     events.emit('bot-message', message);
   }
- 
 }
+
 
