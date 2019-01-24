@@ -10,36 +10,54 @@ Hannah Ingham, Heather Cherewaty, George Raymond, Michael George
 * [repo](https://github.com/pi-assistant/pi-fellow)
 * [travis](http://xyz.com)
 * [back-end](http://xyz.com) (when applicable)
-* [front-end](http://xyz.com) (when applicable)
 
 #### Documentation
-* [swagger](http://xyz.com) (API assignments only)
-* [jsdoc](http://xyz.com) (All assignments)
+* [jsdoc] 
+navigate to docs folder in terminal, then `live-server`
 
 ### Modules
 #### `modulename.js`
 ##### Exported Values and Methods
 
-###### `foo(thing) -> string`
-Usage Notes or examples
 
 ###### `bar(array) -> array`
 Usage Notes or examples
 
 ### Setup
 #### `.env` requirements
-* `PORT` - Port Number
-* `MONGODB_URI` - URL to the running mongo instance/db
+* `PORT` - defned in `.env`
+* telegram account 
+* your peronsal telegram chat_id with @MagPi
+* telegram MagPi bot id
+* google-cloud speech api json key
+
 
 #### Running the app
-* `npm start`
-* Endpoint: `/foo/bar/`
-  * Returns a JSON object with abc in it.
-* Endpoint: `/bing/zing/`
-  * Returns a JSON object with xyz in it.
+* `node index.js`
+* Interacting with your MagPi:
+- speak clearly
+- pause and wait for device light confirmation 
+- on MagPi/user error, expect red flashing lights
+
+#####To create new list
+`hey magpi` pause `new list` pause `{listname}` pause `{items to add to list}`
+
+#####To add to existing list
+`hey magpi` pause `add` pause `{name of exiting list}` pause `{items to add to list}`
+
+#####To send your lists
+`hey magpi` pause `send` pause `{list to be sent}`
+
+#####To send all your lists
+`hey magpi` pause `send all`
+
+#####On MagPi/user error
+`hey siri`
+
+
   
 #### Tests
-* How do you run tests?
+* npm run test-watch
 * What assertions were made?
 * What assertions need to be / should be made?
 
@@ -52,12 +70,12 @@ Link to an image of the UML for your application and response to events
 The video above covers everything you need to set up your Raspberry Pi 3 from out of the box. This is what we used to setup, install, and configure ours. 
 
 
-## How to Set-up Your Microphone and Headphones on Your Raspberry Pi Device:
+### How to Set-up Your Microphone and Headphones on Your Raspberry Pi Device:
 I followed this tutorial to set up our Audo input and output: [Audio Setup](https://maker.pro/raspberry-pi/tutorial/the-best-voice-recognition-software-for-raspberry-pi)
 
 We used the USB Microphone from VALinks [Microphone on Amazon](https://www.amazon.com/VAlinks-Microphone-Recording-Compatible-Raspberry/dp/B014MASID4)
 
-In summary:
+###Getting Started:
 
 To get started, unpackage your microphone and plug it into an available USB slot on your Raspberry Pi device. 
 
@@ -70,15 +88,13 @@ This will create a 3 second audio recording, and it is listening for sounds from
 
 After you have completed the recording, type “aplay test.wav” in your terminal, and your recording should be playing!
 
-#### If you are using your monitor or an HDMI device as your sound output device, please disregard these next steps:
-Only procede with these next steps if you are using an analouge headset with an 3.5mm AUX plug in:
+#### Setting up microphone on raspberry pi:
+To use an analouge headset with an 3.5mm AUX plugin type of the follwing command in the terminal to switch your audio output device to your 3.5mm AUX headphones:
 
-In your terminal type:
   amixer cset numid=3 1
 
-This will switch your audio output device to your 3.5mm AUX headphones.
 
-
-
-
-## How to Set-up the Google Speech API to Parse Audio to Text: 
+## API setup
+* set up a google project account
+* add the google speech cloud api
+* run `brew install sox` on your computer

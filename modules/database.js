@@ -1,7 +1,4 @@
 const fs = require('fs');
-// const dbJson = require('./data/db.json');
-
-
 
 module.exports = (function database(){
     var db;
@@ -20,8 +17,6 @@ module.exports = (function database(){
             console.log('file has been saved');
         })
     }
-
-    
 
     return {
 
@@ -43,40 +38,31 @@ module.exports = (function database(){
         },
 
         update: function(type, str){
-            console.log('the data send with add', str);
+            console.log('the data send with add', str, 'type', type);
            
             if(db[`${type}`]){
+                console.log('found that type oflist');
                 db[`${type}`].items = db[`${type}`].items.concat(' ', str);
-                console.log('just added to database: ', db);
+                console.log('just added to database: ');
                 write();
                 return true;
             }
-
             else{
                 return false;
             }       
         },
 
         sendList: function(listType){
-            console.log('in send method');
-            let conjunctions = ['add', 'and', ','];
-           let requestedList = db[listType].items.split(' ');
-           console.log('new list array', requestedList);
-           const filteredList = requestedList.filter( item => {
-               return !conjunctions.includes(item.trim() );
-           });
-           filteredList.unshift(`Your MagPi ${listType} List: \n`)
-           let filteredStr = filteredList.join('\n - ');
-           return filteredStr;
+            if(db[listType]){
+                return db[listType].items;
+            }
+            return null;
         },
 
         getAll: function(){
             return Object.keys(db);
         }
-
-
-    }
-  }
+    }  
 }());
 
 
