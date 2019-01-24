@@ -1,6 +1,6 @@
 'use strict';
-var Gpio = require('onoff').Gpio;
-var LED = new Gpio(23,'out');
+//var Gpio = require('onoff').Gpio;
+//var LED = new Gpio(23,'out');
 var blinkInterval;
 console.log('test file');
 

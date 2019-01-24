@@ -1,6 +1,6 @@
 // 'use strict';
 
-// const Gpio = require('onoff').Gpio;
+// const Gpio = require('').Gpio;
 
 // const ledRed = new Gpio(16, 'out');
 // const ledGreen = new Gpio(23, 'out');

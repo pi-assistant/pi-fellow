@@ -10,6 +10,7 @@ events.on('add', handleUpdateList);
 
 function handleData(arr){
 
+
   if(arr[1].trim()==='new list'){
     events.emit('new-list', arr[2], arr[3]);
     events.emit('blue-off');
@@ -29,6 +30,28 @@ function handleNewList(type, data){
 
 
 
+function handleUpdateList(type, data){
+
+    if(db.update(type, data)){
+        return;
+    }
+    // else{
+    //    //run error function
+    //    events.emit('error-occurred', 'error'); 
+    //    handleError();
+    // }
+
+}
+
+// events.on('error-occurred', redLight);
+
+// function redLight() {
+//     //turn on the right light
+// }
+
+// function handleError(){
+//     console.log('Oops.  Error occurred.');
+// }
 function handleUpdateList(data){
   db.update(data);
   events.emit('green-flash');
