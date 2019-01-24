@@ -62,8 +62,15 @@ module.exports = (function database(){
         getAll: function(){
             return Object.keys(db);
         }
+<<<<<<< HEAD
     }  
 }());
+=======
+
+
+    }
+  }());
+>>>>>>> 8114d7dbb30d70931de963e7f52e4fc222d4a76e
 
 
 
