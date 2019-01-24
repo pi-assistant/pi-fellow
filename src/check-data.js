@@ -1,66 +1,84 @@
+'use strict';
+
+/**
+ * Check Data
+ * functions that fire when users gives 'new-list' or 'add' command with data
+ * @module src/check-data
+ */
+
 const events = require('../modules/events.js');
 const app = require('./app.js');
 const fs = require('fs');
 const db = require('../modules/database');
 require('./light-listen');
 
+
 events.on('check-data', handleData);
 events.on('new-list', handleNewList);
 events.on('add', handleUpdateList);
 
+/**
+ * @function handleData handles incoming commands 'add' and 'new list' commands from user
+ * @param {array} arr
+ * @fires new-list calls handleNewList
+ * @fires blue-off 
+ * @fires green-flash
+ */
 function handleData(arr){
-
-
   if(arr[1].trim()==='new list'){
     events.emit('new-list', arr[2], arr[3]);
     events.emit('blue-off');
     events.emit('green-flash');
   }
   if(arr[1].trim() === 'add') {
-    events.emit('add', arr[2]);
+    console.log('in handleData arr[3]', arr[3]);
+    events.emit('add', arr[2], arr[3]);
     events.emit('green-flash');
   }
+
 }
 
+/**
+ *
+ * @function handleNewList
+ * @param {*} type
+ * @param {*} data
+ */
 function handleNewList(type, data){
   let listType = type;
   let list = new ListMaker(data, listType);
   db.insert(list);
 }
 
-
-
+/**
+ *
+ * @function handleUpdateList
+ * @param {*} type
+ * @param {*} data
+ */
 function handleUpdateList(type, data){
-
-    if(db.update(type, data)){
-        return;
+    console.log('data in handleUpdateList', data);
+    let updatedDB = db.update(type, data);
+   
+    if(!updatedDB) {
+        console.error('error');
+        events.emit('red-flash');
+        events.emit('red-flash');
     }
-    // else{
-    //    //run error function
-    //    events.emit('error-occurred', 'error'); 
-    //    handleError();
-    // }
-
-}
-
-// events.on('error-occurred', redLight);
-
-// function redLight() {
-//     //turn on the right light
-// }
-
-// function handleError(){
-//     console.log('Oops.  Error occurred.');
-// }
-function handleUpdateList(data){
-  db.update(data);
-  events.emit('green-flash');
 }
 
 
+/**
+ *
+ * @constructor ListMaker
+ * @param {*} str
+ * @param {*} listType
+ */
 function ListMaker(str, listType) {
   this.type = listType,
   this.items = str,
   this.date = new Date();
 }
+
+
 

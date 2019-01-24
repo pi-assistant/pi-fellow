@@ -4,13 +4,15 @@
   "description": "401 mid term pi project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "jsdoc": "jsdoc -c ./docs/config/jsdoc.config.json",
+    "test": "jest",
+    "test-watch": "jest --watch-All"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pi-assistant/pi-fellow.git"
   },
-  "author": "pi-assistant",
+  "author": "Hannah Ingham, Heather Cherewaty,  George Raymond, Michael George",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/pi-assistant/pi-fellow/issues"
@@ -24,8 +26,10 @@
     "express": "^4.16.4",
     "fs": "0.0.1-security",
     "jest": "^23.6.0",
+    "jsdoc": "^3.5.5",
     "load-json-file": "^5.1.0",
     "morgan": "^1.9.1",
+    "node-aplay": "^1.0.3",
     "node-record-lpcm16": "^0.3.1",
     "superagent": "^4.1.0",
     "swagger-ui-express": "^4.0.2",
