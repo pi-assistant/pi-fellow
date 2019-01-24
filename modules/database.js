@@ -1,5 +1,27 @@
+const fs = require('fs');
+// const dbJson = require('./data/db.json');
+
+
+
 module.exports = (function database(){
-    var db = {};
+    var db;
+
+    fs.readFile('./data/db.json', (err,data) => {
+        if(err) {
+            console.error(err);
+        };
+        db = JSON.parse(data.toString());
+        console.log(db);
+    })
+
+    function write() {
+        fs.writeFile('./data/db.json', JSON.stringify(db), (err) => {
+            if(err) {console.err(err);}
+            console.log('file has been saved');
+        })
+    }
+
+    
 
     return {
 
@@ -16,13 +38,23 @@ module.exports = (function database(){
             else{
                 db[`${obj.type}`] = obj;
             }
-
+            write();
             console.log('database', db);
         },
 
-        update: function(str){
-            dbArray[0].items = dbArray[0].items.concat(' ', str);
-            console.log('adding something', dbArray);
+        update: function(type, str){
+            console.log('the data send with add', str);
+           
+            if(db[`${type}`]){
+                db[`${type}`].items = db[`${type}`].items.concat(' ', str);
+                console.log('just added to database: ', db);
+                write();
+                return true;
+            }
+
+            else{
+                return false;
+            }       
         },
 
         sendList: function(listType){

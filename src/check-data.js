@@ -13,7 +13,7 @@ function handleData(arr){
         events.emit('new-list', arr[2], arr[3]);
     }
     if(arr[1].trim() === 'add') {
-        events.emit('add', arr[2]);
+        events.emit('add', arr[2], arr[3]);
     }
 }
 
@@ -26,18 +26,28 @@ function handleNewList(type, data){
 
 
 
-function handleUpdateList(data){
-    db.update(data);
+function handleUpdateList(type, data){
+
+    if(db.update(type, data)){
+        return;
+    }
+    // else{
+    //    //run error function
+    //    events.emit('error-occurred', 'error'); 
+    //    handleError();
+    // }
 
 }
 
-function deleteList(){
+// events.on('error-occurred', redLight);
 
-}
+// function redLight() {
+//     //turn on the right light
+// }
 
-function sendList(){
-
-}
+// function handleError(){
+//     console.log('Oops.  Error occurred.');
+// }
 
 function ListMaker(str, listType) {
     this.type = listType,

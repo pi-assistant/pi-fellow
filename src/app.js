@@ -5,9 +5,10 @@
 const express = require('express');
 const cors = require('cors');
 const speech = require('@google-cloud/speech');
-const fs = require('fs');
+// const fs = require('fs');
 
-const client = new speech.SpeechClient();
+function goJohn(){
+let client = new speech.SpeechClient();
 const record = require('node-record-lpcm16');
 
 const events = require('../modules/events.js');
@@ -24,7 +25,7 @@ const languageCode = 'en-US';
 
 let dataArr = [];
 let parsedString = [];
-
+const magVariants = ['hey magpie', 'a magpie', 'hey McFly','hey man cry', 'play magpie', 'play Mac Dre', 'hey Meg big fat guy'];
 
 const request = {
   config: {
@@ -35,16 +36,14 @@ const request = {
   interimResults: false, // If you want interim results, set this to true
 };
 
+
   const recognizeStream = client
-  .streamingRecognize(request)
-  .on('error', console.error)
-  .on('data', handleData)
+    .streamingRecognize(request)
+    .on('error', console.error)
+    .on('data', handleData);
 
-
-  const magVariants = ['hey magpie', 'a magpie', 'hey McFly','hey man cry', 'play magpie', 'play Mac Dre', 'hey Meg big fat guy'];
 
 // Create a recognize stream
-  
   function listen(arr) {
     if(magVariants.includes(arr[0])){
       events.emit('blue-on');
@@ -52,22 +51,13 @@ const request = {
 
       if(arr[1]){
         events.emit('check-command', arr);
-        events.emit('blue-flash');
-        events.emit('blue-on');
+        // events.emit('blue-flash');
+        // events.emit('blue-on');
         if(arr[3]){
           events.emit('check-data', arr);
           console.log(`dataArr: ${dataArr}`);
-          events.emit('green-flash');
+          // events.emit('green-flash');
         }
-
-      if(arr[1]){
-        parsedString = arr[1].split(' ');
-        parsedString = [];
-        events.emit('blue-off');
-
-      }else {
-        console.log(`arr: ${arr}`);
-      }
     } 
   }
 }
@@ -90,7 +80,6 @@ const request = {
         if(!magVariants.includes(dataArr[0]) ) {
           dataArr = [];
           }
-        
   }
   
 
@@ -99,16 +88,17 @@ const request = {
   .start({
     sampleRateHertz: sampleRateHertz,
     threshold: 0,
-    // Other options, see https://www.npmjs.com/package/node-record-lpcm16#options
     verbose: false,
     recordProgram: 'rec', // Try also "arecord" or "sudo apt"
     silence: '10.0',
-    device: 'plughw:1',
+    //device: 'plughw:1',
   })
   .on('error', console.error)
   .pipe(recognizeStream);
 
   console.log('Listening, press Ctrl+C to stop.');
+}
+
 
 // Prepare the express app
 const app = express();
@@ -119,6 +109,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+goJohn();
+setInterval(goJohn, 60000);
 
 let isRunning = false;
 
