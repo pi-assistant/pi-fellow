@@ -76,8 +76,7 @@ module.exports = (function database(){
 
 
     }
-  }
-}());
+  }());
 
 
 
