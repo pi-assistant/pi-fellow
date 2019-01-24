@@ -73,7 +73,9 @@ module.exports = (function database(){
         getAll: function(){
             return Object.keys(db);
         }
+
     }
+  }
 }());
 
 
