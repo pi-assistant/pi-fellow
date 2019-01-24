@@ -44,6 +44,7 @@ function listen(arr) {
   if(magVariants.includes(arr[0])){
     if(arr.length === 1){
       events.emit('blue-on');
+      events.emit('tweet');
     }
     if(arr[1]){
       if(arr.length === 2){
@@ -93,7 +94,7 @@ record
   verbose: false,
   recordProgram: 'rec', // Try also "arecord" or "sudo apt"
   silence: '10.0',
-  //device: 'plughw:1',
+  device: 'plughw:1',
 })
 .on('error', console.error)
 .pipe(recognizeStream);
