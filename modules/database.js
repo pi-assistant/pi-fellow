@@ -4,7 +4,7 @@ module.exports = (function database(){
   return {
 
     print: function(){
-      console.log(dbArray);
+      console.log(db);
     },
 
     insert: function(obj){
@@ -16,13 +16,12 @@ module.exports = (function database(){
       else{
         db[`${obj.type}`] = obj;
       }
-
       console.log('database', db);
     },
 
     update: function(str){
-      dbArray[0].items = dbArray[0].items.concat(' ', str);
-      console.log('adding something', dbArray);
+      db.items = db.items.concat(' ', str);
+      console.log('adding something', db);
     },
 
     sendList: function(listType){

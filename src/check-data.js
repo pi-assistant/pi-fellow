@@ -12,7 +12,7 @@ function handleData(arr){
 
   if(arr[1].trim()==='new list'){
     events.emit('new-list', arr[2], arr[3]);
-    events.emit('red-flash');
+    events.emit('blue-off');
     events.emit('green-flash');
   }
   if(arr[1].trim() === 'add') {
