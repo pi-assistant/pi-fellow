@@ -63,6 +63,7 @@ module.exports = (function database(){
             return Object.keys(db);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
     }  
 }());
 =======
@@ -71,6 +72,13 @@ module.exports = (function database(){
     }
   }());
 >>>>>>> 8114d7dbb30d70931de963e7f52e4fc222d4a76e
+=======
+    }  
+}());
+
+
+
+>>>>>>> a561f6dad9bd2233b52ef4802f569d0b84d259ca
 
 
 
