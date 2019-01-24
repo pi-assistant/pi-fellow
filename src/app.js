@@ -7,7 +7,7 @@ const cors = require('cors');
 const speech = require('@google-cloud/speech');
 // const fs = require('fs');
 
-function goJohn(){
+
 let client = new speech.SpeechClient();
 const record = require('node-record-lpcm16');
 
@@ -44,8 +44,6 @@ const request = {
 
 
 // Create a recognize stream
-  function listen(arr) {
-    if(magVariants.includes(arr[0])){
   
 function listen(arr) {
   if(magVariants.includes(arr[0])){
@@ -106,13 +104,13 @@ function listen(arr) {
     verbose: false,
     recordProgram: 'rec', // Try also "arecord" or "sudo apt"
     silence: '10.0',
-    //device: 'plughw:1',
+    device: 'plughw:1',
   })
   .on('error', console.error)
   .pipe(recognizeStream);
 
   console.log('Listening, press Ctrl+C to stop.');
-}
+
 
 
 // Prepare the express app
@@ -123,9 +121,6 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-
-goJohn();
-setInterval(goJohn, 60000);
 
 let isRunning = false;
 
