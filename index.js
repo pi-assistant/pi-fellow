@@ -4,8 +4,4 @@ require('dotenv').config();
 
 
 // Start the web server
-require('./src/app.js').start(process.env.PORT);
-
-// setTimeout( () =>{
-//   process.exit(0);
-// }, 5000);
+require('./src/app.js').start(5002);

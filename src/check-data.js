@@ -11,11 +11,16 @@ const app = require('./app.js');
 const fs = require('fs');
 const db = require('../modules/database');
 require('./light-listen');
+const Sound = require('node-aplay');
+
+const magpiError = new Sound('./assets/peacock-error.wav');
+const successSound = new Sound('./assets/success.wav');
 
 
 events.on('check-data', handleData);
 events.on('new-list', handleNewList);
 events.on('add', handleUpdateList);
+events.on('error', handleError);
 
 /**
  * @function handleData handles incoming commands 'add' and 'new list' commands from user
@@ -48,6 +53,7 @@ function handleNewList(type, data){
   let listType = type;
   let list = new ListMaker(data, listType);
   db.insert(list);
+  events.emit('success');
 }
 
 /**
@@ -59,14 +65,19 @@ function handleNewList(type, data){
 function handleUpdateList(type, data){
     console.log('data in handleUpdateList', data);
     let updatedDB = db.update(type, data);
+    events.emit('success');
    
     if(!updatedDB) {
         console.error('error');
         events.emit('red-flash');
         events.emit('red-flash');
+        events.emit('error');
     }
 }
 
+function handleError(){
+  magpiError.play();
+}
 
 /**
  *
