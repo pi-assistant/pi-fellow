@@ -11,7 +11,9 @@ const app = require('./app.js');
 const fs = require('fs');
 const db = require('../modules/database');
 require('./light-listen');
-// const Sound = require('node-aplay');
+const Sound = require('node-aplay');
+const magpiError = new Sound('./assets/peacock-error.wav');
+
 
 // const magpiError = new Sound('./assets/peacock-error.wav');
 // const successSound = new Sound('./assets/success.wav');
@@ -50,6 +52,7 @@ function handleData(arr){
  * @param {*} data
  */
 function handleNewList(type, data){
+  console.log('in handleNewList');
   let listType = type;
   let list = new ListMaker(data, listType);
   db.insert(list);
@@ -75,9 +78,10 @@ function handleUpdateList(type, data){
     }
 }
 
-function handleError(){
+const handleError = ( (err) => {
+  console.log('error', err);
   magpiError.play();
-}
+});
 
 /**
  *
