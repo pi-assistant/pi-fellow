@@ -1,10 +1,1 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-{"magpi":{"test":"test"},"groceries":{"type":"groceries","items":"chickpeas","date":"2019-01-24T19:32:05.958Z"},"reminders":{"type":"reminders","items":"doctors and dentist","date":"2019-01-24T21:56:23.893Z"}}
-=======
-{"Test list":{"type":"groceries","items":"apples"},"groceries":{"type":"groceries","items":"oranges and rum","date":"2019-01-24T01:20:27.245Z"},"reminder":{"type":"reminder","items":"appointment","date":"2019-01-24T00:03:15.969Z"}}
->>>>>>> 8114d7dbb30d70931de963e7f52e4fc222d4a76e
-=======
-{"magpi":{"test":"test"},"groceries":{"type":"groceries","items":"chickpeas","date":"2019-01-24T19:32:05.958Z"},"reminders":{"type":"reminders","items":"doctors and dentist","date":"2019-01-24T21:56:23.893Z"}}
-
->>>>>>> a561f6dad9bd2233b52ef4802f569d0b84d259ca
+{"groceries":{"type":"groceries","items":"to check out like I'm in a new Brown","date":"2019-01-25T01:57:47.326Z"}}

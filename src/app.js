@@ -8,11 +8,10 @@
 
 // 3rd Party Resources
 const express = require('express');
-const cors = require('cors');
-
+const app = express();
+require('./api/speech');
 
 // App Level MW
-app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
