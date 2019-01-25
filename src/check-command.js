@@ -40,31 +40,39 @@ function playTweet(){
  * @fires send-list
  */
 function handleCommand(arr){
-  console.log('command: ', arr[1]);
   let sendCheck = arr[1].split(' ')[0].trim();
 
   if(sendCheck ==='send'){
+    console.log('send');
     let listType = arr[1].split(' ')[1].trim();
     events.emit('green-flash')
     events.emit('blue-off');
-    events.emit('send-list', listType);
+    events.emit('send-list', listType);  
+    console.log('test');
   }
 
   if(arr[1].trim() === 'play music') {
+    console.log('play music');
     events.emit('play');
     events.emit('green-flash');
   }
+
   if(arr[1]=== 'stop music'){
+    console.log('stop music');
     events.emit('stop');
     events.emit('red-flash');
   }
 
   if (arr[1] === 'new list') {
+    console.log('new list');
     events.emit('blue-flash');
     events.emit('green-flash');
     events.emit('blue-on');
+    triggerMock();
   }
-
+}
+function triggerMock() {
+  return;
 }
 
 
@@ -135,6 +143,5 @@ function stopMusic(){
     
 }
 
+module.exports = {handleCommand, formatString, handleSend, events, triggerMock}
 
-
-module.exports = {handleCommand, formatString, handleSend}

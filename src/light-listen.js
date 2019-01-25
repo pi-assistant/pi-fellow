@@ -4,9 +4,9 @@ const events = require('../modules/events');
 const app = require('./app');
 
 const ledController = require('./util/led.js');
-// const Gpio = require('onoff').Gpio;
 
-// const blueLED = new Gpio(4, 'out');
+//const Gpio = require('onoff').Gpio;
+//const blueLED = new Gpio(4, 'out');
 // const greenLED = new Gpio(23, 'out');
 // const redLED = new Gpio(16, 'out');
 

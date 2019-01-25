@@ -53,7 +53,7 @@ module.exports = (function database(){
         },
 
         sendList: function(listType){
-            if(db[listType]){
+            if(db && db[listType]){
                 return db[listType].items;
             }
             return null;
@@ -62,6 +62,7 @@ module.exports = (function database(){
         getAll: function(){
             return Object.keys(db);
         }
+
     }  
 }());
 
