@@ -1,6 +1,6 @@
 'use strict';
-//var Gpio = require('onoff').Gpio;
-//var LED = new Gpio(23,'out');
+var Gpio = require('onoff').Gpio;
+var LED = new Gpio(23,'out');
 var blinkInterval;
 console.log('test file');
 
@@ -26,4 +26,4 @@ function blinker() {
 
 blinker();
 
-//setTimeout(endBlink, 1000);
+setTimeout(endBlink, 1000);

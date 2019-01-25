@@ -45,6 +45,7 @@ function listen(arr) {
     if(arr.length === 1){
       events.emit('blue-on');
       events.emit('tweet');
+      events.emit('tweet');
     }
     if(arr[1]){
       if(arr.length === 2){

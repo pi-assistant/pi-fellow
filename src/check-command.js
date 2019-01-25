@@ -9,11 +9,11 @@
 const events = require('../modules/events.js');
 const app = require('./app.js');
 const db = require('../modules/database');
-// const Sound = require('node-aplay');
-// const magpiTweet = new Sound('./assets/baby-magpi.wav');
-// const magpiError = new Sound('./assets/peacock-error.wav');
-// const successSound = new Sound('./assets/success.wav');
-// const song = new Sound('./assets/song.wav');
+const Sound = require('node-aplay');
+const magpiTweet = new Sound('./assets/baby-magpi.wav');
+const magpiError = new Sound('./assets/peacock-error.wav');
+const successSound = new Sound('./assets/success.wav');
+const song = new Sound('./assets/song.wav');
 
 
 require('./api/send-message');
@@ -28,8 +28,6 @@ events.on('tweet', playTweet);
 function playTweet(){
   magpiTweet.play();
 }
-
-
 
 
 /**
