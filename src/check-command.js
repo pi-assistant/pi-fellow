@@ -47,10 +47,14 @@ function handleCommand(arr){
     events.emit('blue-off');
     events.emit('send-list', listType);
   }
+  if(arr[1].trim() === 'add') {
+      events.emit('blue-flash');
+  }
 
   if(arr[1].trim() === 'play music') {
     events.emit('play');
     events.emit('green-flash');
+    events.emit('blue-off');
   }
   if(arr[1]=== 'stop music'){
     events.emit('stop');

@@ -41,9 +41,11 @@ function handleData(arr){
     events.emit('green-flash');
   }
   if(arr[1].trim() === 'add') {
+    events.emit('blue-flash');
     console.log('in handleData arr[3]', arr[3]);
     events.emit('add', arr[2], arr[3]);
     events.emit('green-flash');
+
   }
 
 }
@@ -59,6 +61,7 @@ function handleNewList(type, data){
   let list = new ListMaker(data, listType);
   db.insert(list);
   events.emit('success');
+  events.emit('blue-off');
 }
 
 /**
@@ -68,9 +71,11 @@ function handleNewList(type, data){
  * @param {*} data
  */
 function handleUpdateList(type, data){
+  events.emit('blue-flash');
     console.log('data in handleUpdateList', data);
     let updatedDB = db.update(type, data);
     events.emit('success');
+    events.emit('blue-off');
    
     if(!updatedDB) {
         console.error('error');
