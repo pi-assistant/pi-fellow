@@ -6,7 +6,7 @@
   "scripts": {
     "jsdoc": "jsdoc -c ./docs/config/jsdoc.config.json",
     "test": "jest",
-    "test-watch": "jest"
+    "test-watch": "jest --coverage --verbose"
   },
   "repository": {
     "type": "git",
