@@ -8,6 +8,7 @@
 
 // 3rd Party Resources
 const express = require('express');
+
 const app = express();
 require('./api/speech');
 

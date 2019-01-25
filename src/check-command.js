@@ -10,9 +10,10 @@ const events = require('../modules/events.js');
 const app = require('./app.js');
 const db = require('../modules/database');
 const Sound = require('node-aplay');
-const mapgiTweet = new Sound('../assets/baby-magpi.wav');
-const magpiError = new Sound('../assets/peacock-error.wav');
-const song = new Sound('../assets/song.wav');
+const magpiTweet = new Sound('./assets/baby-magpi.wav');
+const magpiError = new Sound('./assets/peacock-error.wav');
+const successSound = new Sound('./assets/success.wav');
+const song = new Sound('./assets/song.wav');
 
 
 require('./api/send-message');
@@ -22,6 +23,13 @@ events.on('send-list', handleSend);
 events.on('check-command', handleCommand);
 events.on('play', playMusic);
 events.on('stop', stopMusic);
+events.on('tweet', playTweet);
+
+function playTweet(){
+  magpiTweet.play();
+}
+
+
 
 
 /**
@@ -83,6 +91,7 @@ function handleSend(listType){
     let message = formatString(requestedItems, list);
     events.emit('bot-message', message);
     events.emit('green-flash');
+    events.emit('success');
     })        
   }
   else{
@@ -91,12 +100,14 @@ function handleSend(listType){
     if(requestedItems === null){
         console.error('error');
         events.emit('red-flash');
+        events.emit('error');
     }
     else{
         let message = formatString(requestedItems, listType);
         console.log(listType, message);
         events.emit('bot-message', message);
         events.emit('green-flash');
+        events.emit('success');
     }
   }
 }
@@ -123,10 +134,14 @@ function formatString(str, listType){
 function playMusic() {
     console.log('in play music');
       song.play();
+      setTimeout(function() {
+        song.pause();
+      }, 10000); 
 }
 
 function stopMusic(){
-    song.pause(); 
+    
 }
 
 module.exports = {handleCommand, formatString, handleSend, events, triggerMock}
+

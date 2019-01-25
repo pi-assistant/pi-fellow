@@ -63,13 +63,8 @@ module.exports = (function database(){
             return Object.keys(db);
         }
 
-
-
-    }
-  }());
-
-
-
+    }  
+}());
 
 
 
