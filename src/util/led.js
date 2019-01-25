@@ -1,28 +1,28 @@
 'use strict';
 
 function lightSolid(led) {
-	led.writeSync(1);
+  led.writeSync(1);
 }
 
 function blinker(led) {
-	let thisLight = led;
+  let thisLight = led;
 	
-	let blinkInterval = setInterval( (led) => {
-		if (thisLight.readSync() === 0) {
-			thisLight.writeSync(1);
-		} else {
-			thisLight.writeSync(0);
-		}	
-	}, 150);
+  let blinkInterval = setInterval( (led) => {
+    if (thisLight.readSync() === 0) {
+      thisLight.writeSync(1);
+    } else {
+      thisLight.writeSync(0);
+    }	
+  }, 150);
 	
-	setTimeout( (light) => {
-		clearInterval(blinkInterval);
-	}, 1000);
+  setTimeout( (light) => {
+    clearInterval(blinkInterval);
+  }, 1000);
 	
-};
+}
 
 function kill(led) {
-	led.writeSync(0);
+  led.writeSync(0);
 }
 
 module.exports = {lightSolid, blinker, kill};

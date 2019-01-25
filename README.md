@@ -16,9 +16,42 @@ Hannah Ingham, Heather Cherewaty, George Raymond, Michael George
 navigate to docs folder in terminal, then `live-server`
 
 ### Modules
-#### `modulename.js`
+#### `src/light-listen.js`
 ##### Exported Values and Methods
-
+handleBlueOn()
+handleBlueOff()
+handleGreenFlash()
+handleRedFlash()
+handleBlueFlash() 
+#### `src/check-data.js
+##### Exported Values and Methods
+handleData()
+handleNewList()
+handleUpdateList()
+handleError()
+ListMaker()
+#### `src/check-command.js`
+##### Exported Values and Methods
+handleCommand()
+formatString()
+handleSend()
+events()
+triggerMock()
+#### `src/app.js`
+##### Exported Values and Methods
+This file exports the server object with a start method.
+#### `src/util/led.js`
+##### Exported Values and Methods
+lightSolid()
+blinker()
+kill()
+#### `src/api/send-message.js`
+##### Exported Values and Methods
+handleMessage()
+#### `src/api/speech.js`
+##### Exported Values and Methods
+listen()
+handleData()
 
 ###### `bar(array) -> array`
 Usage Notes or examples
@@ -31,7 +64,6 @@ Usage Notes or examples
 * telegram MagPi bot id
 * google-cloud speech api json key
 
-
 #### Running the app
 * `node index.js`
 * Interacting with your MagPi:
@@ -39,23 +71,21 @@ Usage Notes or examples
 - pause and wait for device light confirmation 
 - on MagPi/user error, expect red flashing lights
 
-#####To create new list
+##### To create new list
 `hey magpi` pause `new list` pause `{listname}` pause `{items to add to list}`
 
-#####To add to existing list
+##### To add to existing list
 `hey magpi` pause `add` pause `{name of exiting list}` pause `{items to add to list}`
 
-#####To send your lists
+##### To send your lists
 `hey magpi` pause `send` pause `{list to be sent}`
 
-#####To send all your lists
+##### To send all your lists
 `hey magpi` pause `send all`
 
-#####On MagPi/user error
-`hey siri`
+##### On MagPi/user error
+`hey Siri`
 
-
-  
 #### Tests
 * npm run test-watch
 * What assertions were made?
@@ -69,13 +99,12 @@ Link to an image of the UML for your application and response to events
 
 The video above covers everything you need to set up your Raspberry Pi 3 from out of the box. This is what we used to setup, install, and configure ours. 
 
-
 ### How to Set-up Your Microphone and Headphones on Your Raspberry Pi Device:
 I followed this tutorial to set up our Audo input and output: [Audio Setup](https://maker.pro/raspberry-pi/tutorial/the-best-voice-recognition-software-for-raspberry-pi)
 
 We used the USB Microphone from VALinks [Microphone on Amazon](https://www.amazon.com/VAlinks-Microphone-Recording-Compatible-Raspberry/dp/B014MASID4)
 
-###Getting Started:
+### Getting Started:
 
 To get started, unpackage your microphone and plug it into an available USB slot on your Raspberry Pi device. 
 
@@ -92,7 +121,6 @@ After you have completed the recording, type “aplay test.wav” in your termin
 To use an analouge headset with an 3.5mm AUX plugin type of the follwing command in the terminal to switch your audio output device to your 3.5mm AUX headphones:
 
   amixer cset numid=3 1
-
 
 ## API setup
 * set up a google project account

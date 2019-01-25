@@ -16,7 +16,6 @@ require('./light-listen');
 // const magpiError = new Sound('./assets/peacock-error.wav');
 // const successSound = new Sound('./assets/success.wav');
 
-
 events.on('check-data', handleData);
 events.on('new-list', handleNewList);
 events.on('add', handleUpdateList);
@@ -40,7 +39,6 @@ function handleData(arr){
     events.emit('add', arr[2], arr[3]);
     events.emit('green-flash');
   }
-
 }
 
 /**
@@ -63,16 +61,16 @@ function handleNewList(type, data){
  * @param {*} data
  */
 function handleUpdateList(type, data){
-    console.log('data in handleUpdateList', data);
-    let updatedDB = db.update(type, data);
-    events.emit('success');
+  console.log('data in handleUpdateList', data);
+  let updatedDB = db.update(type, data);
+  events.emit('success');
    
-    if(!updatedDB) {
-        console.error('error');
-        events.emit('red-flash');
-        events.emit('red-flash');
-        events.emit('error');
-    }
+  if(!updatedDB) {
+    console.error('error');
+    events.emit('red-flash');
+    events.emit('red-flash');
+    events.emit('error');
+  }
 }
 
 function handleError(){

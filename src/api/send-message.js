@@ -1,3 +1,5 @@
+'use strict';
+
 const telegram = require('telegram-bot-api');
 const events = require('../../modules/events');
 require('../check-command');
@@ -5,9 +7,8 @@ require('../check-command');
 events.on('bot-message', handleMessage);
 
 function handleMessage(message) {
-
   const api = new telegram({
-    token: process.env.TELEGRAM_BOT
+    token: process.env.TELEGRAM_BOT,
   });
 
   api.sendMessage({
@@ -15,9 +16,8 @@ function handleMessage(message) {
     text: message,
   })
 
-  .catch(function(err)
-  {
-    console.log(err);
-  })
-
+    .catch(function(err)
+    {
+      console.log(err);
+    });
 }

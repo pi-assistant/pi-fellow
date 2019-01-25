@@ -48,15 +48,15 @@ function listen(arr) {
     }
     if(arr[1]){
       if(arr.length === 2){
-      events.emit('check-command', arr);
+        events.emit('check-command', arr);
       }
-    if(arr[2]) {
-      events.emit('blue-flash');
-      events.emit('blue-on');
-    }
-    if(arr[3]){
-      events.emit('check-data', arr);
-    }
+      if(arr[2]) {
+        events.emit('blue-flash');
+        events.emit('blue-on');
+      }
+      if(arr[3]){
+        events.emit('check-data', arr);
+      }
     } 
   }
 }
@@ -74,7 +74,7 @@ function handleData (data){
 
   events.on('send-list', ()=>{
     dataArr=[];
-  })
+  });
             
   if(dataArr.length > 3){
     dataArr = [];
@@ -88,16 +88,16 @@ function handleData (data){
 
 // Start recording and send the microphone input to the Speech API
 record
-.start({
-  sampleRateHertz: sampleRateHertz,
-  threshold: 0,
-  verbose: false,
-  recordProgram: 'rec', // Try also "arecord" or "sudo apt"
-  silence: '10.0',
-  device: 'plughw:1',
-})
-.on('error', console.error)
-.pipe(recognizeStream);
+  .start({
+    sampleRateHertz: sampleRateHertz,
+    threshold: 0,
+    verbose: false,
+    recordProgram: 'rec', // Try also "arecord" or "sudo apt"
+    silence: '10.0',
+    device: 'plughw:1',
+  })
+  .on('error', console.error)
+  .pipe(recognizeStream);
 
 console.log('Listening, press Ctrl+C to stop.');
 

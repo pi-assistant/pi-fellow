@@ -45,7 +45,7 @@ function handleCommand(arr){
   if(sendCheck ==='send'){
     console.log('send');
     let listType = arr[1].split(' ')[1].trim();
-    events.emit('green-flash')
+    events.emit('green-flash');
     events.emit('blue-off');
     events.emit('send-list', listType);  
     console.log('test');
@@ -87,27 +87,27 @@ function handleSend(listType){
     let listArr = db.getAll();
     console.log(listArr);
     listArr.forEach( list => {
-    let requestedItems = db.sendList(list);
-    let message = formatString(requestedItems, list);
-    events.emit('bot-message', message);
-    events.emit('green-flash');
-    events.emit('success');
-    })        
+      let requestedItems = db.sendList(list);
+      let message = formatString(requestedItems, list);
+      events.emit('bot-message', message);
+      events.emit('green-flash');
+      events.emit('success');
+    });        
   }
   else{
     let requestedItems = db.sendList(listType);
 
     if(requestedItems === null){
-        console.error('error');
-        events.emit('red-flash');
-        events.emit('error');
+      console.error('error');
+      events.emit('red-flash');
+      events.emit('error');
     }
     else{
-        let message = formatString(requestedItems, listType);
-        console.log(listType, message);
-        events.emit('bot-message', message);
-        events.emit('green-flash');
-        events.emit('success');
+      let message = formatString(requestedItems, listType);
+      console.log(listType, message);
+      events.emit('bot-message', message);
+      events.emit('green-flash');
+      events.emit('success');
     }
   }
 }
@@ -120,28 +120,30 @@ function handleSend(listType){
  * @returns {string} a string that formatted to print as a list
  */
 function formatString(str, listType){
-    let conjunctions = ['add', 'and', ','];
-   let strArr = str.split(' ');
-   const filteredStr = strArr.filter( item => {
-       return !conjunctions.includes(item.trim() );
-   });
-   filteredStr.unshift(`Your MagPi ${listType} List: \n`);
-   let myList = filteredStr.join('\n - ');
-   return myList;
+  let conjunctions = ['add', 'and', ','];
+  let strArr = str.split(' ');
+  const filteredStr = strArr.filter( item => {
+    return !conjunctions.includes(item.trim() );
+  });
+  filteredStr.unshift(`Your MagPi ${listType} List: \n`);
+  let myList = filteredStr.join('\n - ');
+  return myList;
 }
 
 //play song function
+'use strict';
+
 function playMusic() {
-    console.log('in play music');
-      song.play();
-      setTimeout(function() {
-        song.pause();
-      }, 10000); 
+  console.log('in play music');
+  song.play();
+  setTimeout(function() {
+    song.pause();
+  }, 10000); 
 }
 
 function stopMusic(){
     
 }
 
-module.exports = {handleCommand, formatString, handleSend, events, triggerMock}
+module.exports = {handleCommand, formatString, handleSend, events, triggerMock};
 
