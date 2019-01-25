@@ -1,9 +1,8 @@
 'use strict';
+process.env.GOOGLE_APPLICATION_CREDENTIALS = '/Users/hannahingham/codefellows/401/labs/projects/pi-fellow/cloud.json'
 
 const dataCheck = require('../../src/check-data');
-require('../../modules/events');
-
-
+// require('../../modules/events');
 
 
 describe('handleData()', () => {
@@ -38,14 +37,7 @@ describe('handleUpdateList()', () => {
     });
 });
 
-// describe('handleError()', () => {
-//     it('handles error', () => {
-//         const spy = jest.spyOn(console, 'log');
-//         dataCheck.handleError();
-//         expect(spy).toHaveBeenCalled();
-//         spy.mockRestore();
-//     });
-// });
+
 
 
 

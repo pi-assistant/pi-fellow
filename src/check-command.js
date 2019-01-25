@@ -22,14 +22,12 @@ require('./light-listen');
 events.on('send-list', handleSend);
 events.on('check-command', handleCommand);
 events.on('play', playMusic);
-events.on('stop', stopMusic);
 events.on('tweet', playTweet);
+
 
 function playTweet(){
   magpiTweet.play();
 }
-
-
 
 
 /**
@@ -100,7 +98,7 @@ function handleSend(listType){
     if(requestedItems === null){
         console.error('error');
         events.emit('red-flash');
-        events.emit('error');
+        // events.emit('error');
     }
     else{
         let message = formatString(requestedItems, listType);
@@ -113,7 +111,6 @@ function handleSend(listType){
 }
 
 /**
- *
  * @function formatString formats a list
  * @param {string} items
  * @param {string} listType
@@ -139,8 +136,5 @@ function playMusic() {
       }, 10000); 
 }
 
-function stopMusic(){
-    
-}
 
 module.exports = {handleCommand, formatString, handleSend, events, triggerMock}

@@ -1,13 +1,4 @@
-// let fakeDB = {
-//     groceries: {
-//         name: 'groceries',
-//         items: 'apples bananas'
-//     },
-//     reminders: {
-//         name: 'reminders',
-//         items: 'dentist'
-//     }
-// }
+
 
 module.exports = (function database(){
     var db = {};

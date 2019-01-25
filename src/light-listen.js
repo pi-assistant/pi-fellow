@@ -3,7 +3,7 @@
 const events = require('../modules/events');
 const app = require('./app');
 
-const ledController = require('./util/led.js');
+// const ledController = require('./util/led.js');
 
 //const Gpio = require('onoff').Gpio;
 //const blueLED = new Gpio(4, 'out');
@@ -40,3 +40,5 @@ function handleBlueFlash() {
   // ledController.blinker(blueLED);
   console.log('blue light flash');
 }
+
+module.exports = {handleBlueOn, handleBlueOff, handleGreenFlash, handleRedFlash, handleBlueFlash}

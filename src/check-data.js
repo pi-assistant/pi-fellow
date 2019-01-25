@@ -15,8 +15,7 @@ const Sound = require('node-aplay');
 const magpiError = new Sound('./assets/peacock-error.wav');
 
 
-// const magpiError = new Sound('./assets/peacock-error.wav');
-// const successSound = new Sound('./assets/success.wav');
+const successSound = new Sound('./assets/success.wav');
 
 
 events.on('check-data', handleData);
@@ -78,11 +77,10 @@ function handleUpdateList(type, data){
     }
 }
 
-const handleError = ( (err) => {
-  console.log('error', err);
+function handleError (){
+  console.log('error');
   magpiError.play();
-});
-
+}
 /**
  *
  * @constructor ListMaker

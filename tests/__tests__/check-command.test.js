@@ -1,12 +1,13 @@
 'use strict'
 
+process.env.GOOGLE_APPLICATION_CREDENTIALS = '/Users/hannahingham/codefellows/401/labs/projects/pi-fellow/cloud.json'
+
 const c = require('../../src/check-command');
-require('../../modules/events.js');
-const events = require('./events.js');
-jest.mock('./events.js');
+// require('../../modules/events.js');
+// jest.mock('./events.js');
 
 
-describe('EventEmitter', function() {
+describe('handle command', function() {
   describe('handle command', function() {
 
    it('calls console log when hey magpie is followed a known command', () =>{
@@ -42,16 +43,6 @@ describe('EventEmitter', function() {
   });
 })
 
-describe('play music', function() {
-
-  // it('calls console log when play music is called', () =>{
-  //   const spy = jest.spyOn(console, 'log');
-  //   c.playMusic();
-  //   expect(spy).toHaveBeenCalled();
-  //   spy.mockRestore();
-  // });
-
-})
 })
 
 
