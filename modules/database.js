@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 module.exports = (function database(){
-    var db;
+    var db = {};
 
     fs.readFile('./data/db.json', (err,data) => {
         if(err) {

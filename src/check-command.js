@@ -9,11 +9,10 @@
 const events = require('../modules/events.js');
 const app = require('./app.js');
 const db = require('../modules/database');
-// const Sound = require('node-aplay');
-// const magpiTweet = new Sound('./assets/baby-magpi.wav');
-// const magpiError = new Sound('./assets/peacock-error.wav');
-// const successSound = new Sound('./assets/success.wav');
-// const song = new Sound('./assets/song.wav');
+const Sound = require('node-aplay');
+const mapgiTweet = new Sound('../assets/baby-magpi.wav');
+const magpiError = new Sound('../assets/peacock-error.wav');
+const song = new Sound('../assets/song.wav');
 
 
 require('./api/send-message');
@@ -22,14 +21,6 @@ require('./light-listen');
 events.on('send-list', handleSend);
 events.on('check-command', handleCommand);
 events.on('play', playMusic);
-events.on('stop', stopMusic);
-events.on('tweet', playTweet);
-
-function playTweet(){
-  magpiTweet.play();
-}
-
-
 
 
 /**
@@ -48,7 +39,6 @@ function handleCommand(arr){
     events.emit('green-flash')
     events.emit('blue-off');
     events.emit('send-list', listType);  
-    console.log('test');
   }
 
   if(arr[1].trim() === 'play music') {
@@ -57,23 +47,15 @@ function handleCommand(arr){
     events.emit('green-flash');
   }
 
-  if(arr[1]=== 'stop music'){
-    console.log('stop music');
-    events.emit('stop');
-    events.emit('red-flash');
-  }
 
   if (arr[1] === 'new list') {
     console.log('new list');
     events.emit('blue-flash');
     events.emit('green-flash');
     events.emit('blue-on');
-    triggerMock();
   }
 }
-function triggerMock() {
-  return;
-}
+
 
 
 /**
@@ -84,14 +66,13 @@ function triggerMock() {
  */
 function handleSend(listType){
   if(listType === 'all' || listType === 'lists'){
+    console.log('all');
     let listArr = db.getAll();
-    console.log(listArr);
     listArr.forEach( list => {
     let requestedItems = db.sendList(list);
     let message = formatString(requestedItems, list);
     events.emit('bot-message', message);
     events.emit('green-flash');
-    events.emit('success');
     })        
   }
   else{
@@ -100,14 +81,12 @@ function handleSend(listType){
     if(requestedItems === null){
         console.error('error');
         events.emit('red-flash');
-        events.emit('error');
     }
     else{
         let message = formatString(requestedItems, listType);
         console.log(listType, message);
         events.emit('bot-message', message);
         events.emit('green-flash');
-        events.emit('success');
     }
   }
 }
@@ -131,17 +110,18 @@ function formatString(str, listType){
 }
 
 //play song function
+/**
+ * @function playMusic uses node-aplay to play a wav file
+ *
+ */
 function playMusic() {
     console.log('in play music');
       song.play();
-      setTimeout(function() {
-        song.pause();
-      }, 10000); 
 }
 
-function stopMusic(){
-    
-}
 
-module.exports = {handleCommand, formatString, handleSend, events, triggerMock}
+module.exports = {handleCommand, formatString, handleSend,playMusic}
+
+
+
 

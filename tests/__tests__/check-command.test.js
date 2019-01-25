@@ -9,7 +9,7 @@ jest.mock('./events.js');
 describe('EventEmitter', function() {
   describe('handle command', function() {
 
-   it('logs error saved when error', () =>{
+   it('calls console log when hey magpie is followed a known command', () =>{
       const spy = jest.spyOn(console, 'log');
       c.handleCommand(['hey magpie', 'send groceries']);
       expect(spy).toHaveBeenCalled();
@@ -23,13 +23,35 @@ describe('EventEmitter', function() {
       spy.mockRestore();
     });
 
-    it('does emit an event', () =>{
-      const spy = jest.spyOn(c, 'handleCommand');
-      c.handleCommand(['hey magpie', 'new List']);
-      expect(spy).toHaveBeenCalled();
-      spy.mockRestore();
-    });
  })
+
+ describe('handleSend', function() {
+
+  it('calls console log when hey magpie is followed a known command', () =>{
+    const spy = jest.spyOn(console, 'log');
+    c.handleSend('all');
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
+  });
+
+   it('it calls console error if the list type is not in db', () =>{
+    const spy = jest.spyOn(console, 'error');
+    c.handleSend('foo');
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
+  });
+})
+
+describe('play music', function() {
+
+  // it('calls console log when play music is called', () =>{
+  //   const spy = jest.spyOn(console, 'log');
+  //   c.playMusic();
+  //   expect(spy).toHaveBeenCalled();
+  //   spy.mockRestore();
+  // });
+
+})
 })
 
 
