@@ -11,10 +11,10 @@ const app = require('./app.js');
 const fs = require('fs');
 const db = require('../modules/database');
 require('./light-listen');
-const Sound = require('node-aplay');
+// const Sound = require('node-aplay');
 
-const magpiError = new Sound('./assets/peacock-error.wav');
-const successSound = new Sound('./assets/success.wav');
+// const magpiError = new Sound('./assets/peacock-error.wav');
+// const successSound = new Sound('./assets/success.wav');
 
 
 events.on('check-data', handleData);
@@ -90,6 +90,8 @@ function ListMaker(str, listType) {
   this.items = str,
   this.date = new Date();
 }
+
+module.exports = {handleData, handleNewList, handleUpdateList, handleError, ListMaker};
 
 
 
