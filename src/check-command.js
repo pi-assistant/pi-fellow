@@ -30,8 +30,6 @@ function playTweet(){
 }
 
 
-
-
 /**
  * @function handleCommand checks the user command for a MagPi match
  * @param {array} arr
@@ -50,11 +48,15 @@ function handleCommand(arr){
     events.emit('send-list', listType);  
     console.log('test');
   }
+  if(arr[1].trim() === 'add') {
+      events.emit('blue-flash');
+  }
 
   if(arr[1].trim() === 'play music') {
     console.log('play music');
     events.emit('play');
     events.emit('green-flash');
+    events.emit('blue-off');
   }
 
   if(arr[1]=== 'stop music'){

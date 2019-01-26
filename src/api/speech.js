@@ -45,10 +45,12 @@ function listen(arr) {
     if(arr.length === 1){
       events.emit('blue-on');
       events.emit('tweet');
+      events.emit('tweet');
     }
     if(arr[1]){
       if(arr.length === 2){
       events.emit('check-command', arr);
+      events.emit('blue-flash');
       }
     if(arr[2]) {
       events.emit('blue-flash');
@@ -78,10 +80,12 @@ function handleData (data){
             
   if(dataArr.length > 3){
     dataArr = [];
+    events.emit('blue-off');
   }
     
   if(!magVariants.includes(dataArr[0]) ) {
     dataArr = [];
+    events.emit('blue-off');
   }
 }
   

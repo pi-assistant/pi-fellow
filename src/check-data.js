@@ -12,17 +12,25 @@ const fs = require('fs');
 const db = require('../modules/database');
 require('./light-listen');
 const Sound = require('node-aplay');
+<<<<<<< HEAD
 const magpiError = new Sound('./assets/peacock-error.wav');
 
+=======
+>>>>>>> bf6588ba6196fae7c1ee992922e5d17f74012634
 
-// const magpiError = new Sound('./assets/peacock-error.wav');
-// const successSound = new Sound('./assets/success.wav');
+const magpiError = new Sound('./assets/peacock-error.wav');
+const successSound = new Sound('./assets/success.wav');
 
 
 events.on('check-data', handleData);
 events.on('new-list', handleNewList);
 events.on('add', handleUpdateList);
 events.on('error', handleError);
+events.on('success', handleSuccess);
+
+function handleSuccess(){
+  successSound.play();
+}
 
 /**
  * @function handleData handles incoming commands 'add' and 'new list' commands from user
@@ -38,9 +46,11 @@ function handleData(arr){
     events.emit('green-flash');
   }
   if(arr[1].trim() === 'add') {
+    events.emit('blue-flash');
     console.log('in handleData arr[3]', arr[3]);
     events.emit('add', arr[2], arr[3]);
     events.emit('green-flash');
+
   }
 
 }
@@ -57,6 +67,7 @@ function handleNewList(type, data){
   let list = new ListMaker(data, listType);
   db.insert(list);
   events.emit('success');
+  events.emit('blue-off');
 }
 
 /**
@@ -66,9 +77,11 @@ function handleNewList(type, data){
  * @param {*} data
  */
 function handleUpdateList(type, data){
+  events.emit('blue-flash');
     console.log('data in handleUpdateList', data);
     let updatedDB = db.update(type, data);
     events.emit('success');
+    events.emit('blue-off');
    
     if(!updatedDB) {
         console.error('error');
