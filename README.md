@@ -71,11 +71,11 @@ The video above covers everything you need to set up your Raspberry Pi 3 from ou
 
 
 ### How to Set-up Your Microphone and Headphones on Your Raspberry Pi Device:
-I followed this tutorial to set up our Audo input and output: [Audio Setup](https://maker.pro/raspberry-pi/tutorial/the-best-voice-recognition-software-for-raspberry-pi)
+Followed this tutorial to set up our Audo input and output: [Audio Setup](https://maker.pro/raspberry-pi/tutorial/the-best-voice-recognition-software-for-raspberry-pi)
 
-We used the USB Microphone from VALinks [Microphone on Amazon](https://www.amazon.com/VAlinks-Microphone-Recording-Compatible-Raspberry/dp/B014MASID4)
+Used the USB Microphone from VALinks [Microphone on Amazon](https://www.amazon.com/VAlinks-Microphone-Recording-Compatible-Raspberry/dp/B014MASID4)
 
-###Getting Started:
+### Getting Started:
 
 To get started, unpackage your microphone and plug it into an available USB slot on your Raspberry Pi device. 
 

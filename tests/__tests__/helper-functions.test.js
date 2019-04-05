@@ -1,5 +1,5 @@
 const commands = require('../../src/check-command');
-process.env.GOOGLE_APPLICATION_CREDENTIALS = '/Users/hannahingham/codefellows/401/labs/projects/pi-fellow/cloud.json'
+// process.env.GOOGLE_APPLICATION_CREDENTIALS = '/Users/hannahingham/codefellows/401/labs/projects/pi-fellow/cloud.json'
 
 describe('formatString()', () => {
     it('can format a string for sending list to phone', () => {

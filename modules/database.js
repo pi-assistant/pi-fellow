@@ -1,72 +1,65 @@
-const fs = require('fs');
+const fs = require("fs");
 
-module.exports = (function database(){
-    var db = {};
+module.exports = (function database() {
+  var db = {};
 
-    fs.readFile('./data/db.json', (err,data) => {
-        if(err) {
-            console.error(err);
-        };
-        db = JSON.parse(data.toString());
-        console.log(db);
-    })
-
-    function write() {
-        fs.writeFile('./data/db.json', JSON.stringify(db), (err) => {
-            if(err) {console.err(err);}
-            console.log('file has been saved');
-        })
+  fs.readFile("./data/db.json", (err, data) => {
+    if (err) {
+      console.error(err);
     }
+    db = JSON.parse(data.toString());
+    console.log(db);
+  });
 
-    return {
+  function write() {
+    fs.writeFile("./data/db.json", JSON.stringify(db), err => {
+      if (err) {
+        console.err(err);
+      }
+      console.log("file has been saved");
+    });
+  }
 
-        print: function(){
-            console.log(dbArray);
-        },
+  return {
+    print: function() {
+      console.log(dbArray);
+    },
 
-        insert: function(obj){
-            // console.log('the list obj', obj);
-            if(db[`${obj.type}`]){
-                db[`${obj.type}`].items = obj.items;
-                db[`${obj.type}`].date = obj.date;
-            }
-            else{
-                db[`${obj.type}`] = obj;
-            }
-            write();
-            console.log('database', db);
-        },
+    insert: function(obj) {
+      // console.log('the list obj', obj);
+      if (db[`${obj.type}`]) {
+        db[`${obj.type}`].items = obj.items;
+        db[`${obj.type}`].date = obj.date;
+      } else {
+        db[`${obj.type}`] = obj;
+      }
+      write();
+      console.log("database", db);
+    },
 
-        update: function(type, str){
-            console.log('the data send with add', str, 'type', type);
-           
-            if(db[`${type}`]){
-                console.log('found that type oflist');
-                db[`${type}`].items = db[`${type}`].items.concat(' ', str);
-                console.log('just added to database: ');
-                write();
-                return true;
-            }
-            else{
-                return false;
-            }       
-        },
+    update: function(type, str) {
+      console.log("the data send with add", str, "type", type);
 
-        sendList: function(listType){
-            if(db && db[listType]){
-                return db[listType].items;
-            }
-            return null;
-        },
+      if (db[`${type}`]) {
+        console.log("found that type oflist");
+        db[`${type}`].items = db[`${type}`].items.concat(" ", str);
+        console.log("just added to database: ");
+        write();
+        return true;
+      } else {
+        return false;
+      }
+    },
 
-        getAll: function(){
-            return Object.keys(db);
-        }
+    sendList: function(listType) {
+      if (db && db[listType]) {
+        return db[listType].items;
+      }
+      return null;
+    },
 
-    }  
-}());
-
-
-
-
-
+    getAll: function() {
+      return Object.keys(db);
+    }
+  };
+})();

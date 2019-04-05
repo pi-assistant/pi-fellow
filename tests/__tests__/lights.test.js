@@ -2,7 +2,7 @@
 
 const listen = require('../../src/light-listen');
 require('../../modules/events.js');
-process.env.GOOGLE_APPLICATION_CREDENTIALS = '/Users/hannahingham/codefellows/401/labs/projects/pi-fellow/cloud.json'
+// process.env.GOOGLE_APPLICATION_CREDENTIALS = '/Users/hannahingham/codefellows/401/labs/projects/pi-fellow/cloud.json'
 
 
 describe('Light Listen', function() {
